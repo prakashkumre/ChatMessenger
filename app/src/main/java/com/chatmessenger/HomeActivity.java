@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         sqLiteHelper = new SqLiteHelper(this);
         iv_send.setOnClickListener(sendClickListener);
         et_chat.addTextChangedListener(chatTextWatcher);
-        et_chat.setOnClickListener(editTextClickListner);
+        //et_chat.setOnClickListener(editTextClickListner);
         chatMessageList = sqLiteHelper.getSendeData();
 
         chatAdapter = new ChatAdapter(HomeActivity.this, chatMessageList);
@@ -52,6 +52,13 @@ public class HomeActivity extends AppCompatActivity {
         rv_chat.setLayoutManager(mLayoutManager);
         rv_chat.setAdapter(chatAdapter);
         rv_chat.scrollToPosition(chatMessageList.size() - 1);
+        et_chat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasfocus) {
+                if(hasfocus)
+                rv_chat.scrollToPosition(chatMessageList.size()-1);
+            }
+        });
 
 
     }
@@ -71,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     private EditText.OnClickListener editTextClickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            rv_chat.scrollToPosition(chatMessageList.size()+1);
+            rv_chat.scrollToPosition(chatMessageList.size()-1);
         }
     };
 
